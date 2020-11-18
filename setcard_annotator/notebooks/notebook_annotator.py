@@ -20,14 +20,10 @@
 
 # +
 # examples to annotate: list of path or directory with card images
-examples = [
-    '../../../data_for_tests/examples_for_annotator/IMG_20170518_204728_0.png', 
-    '../../../data_for_tests/examples_for_annotator/IMG_20170518_205001_7.png',
-]
-#examples = '../../../data_for_tests/examples_for_annotator'
+examples = ''
 
 # output directory for annotation saved as json files
-# If None annotations are saved in default `labels` sub-directory 
+# If None annotations are saved by default in `labels` sub-directory of the examples directory
 output_dir = None
 # -
 
