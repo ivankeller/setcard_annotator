@@ -20,6 +20,15 @@ python -m unittest discover -v
 jupyter notebook
 ```
 
-In Jupyter notebook navigate to `setcard_annotator/notebooks` and start `notebook_annotator` notebook:  
+1. In Jupyter notebook navigate to `setcard_annotator/notebooks` and start the `notebook_annotator` notebook:  
 <img alt="jupyter" width="400" src="./assets/jupyter.png">
+
+2. On the top **configuration** cell provide:
+    - the path to the input directory containing PNG or JPG images to annotate, or a list of image paths
+    - (optional) the path for saving the annotations
+
+3. Run the cells and annotate using the buttons.   
+Annotations are saved one by one as individual JSON files in the `labels` sub-directory.
+Thus the process can be stopped at anytime to be resumed later: the annotation tool shows only the images that have not been previously annotated (based on the filename).
+
 
