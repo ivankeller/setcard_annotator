@@ -1,6 +1,8 @@
 # setcard_annotator
 A simple tool for annotating Set cards images from a Jupyter notebook.
 
+(inspired by https://github.com/agermanidis/pigeon and cleanly refactored ;)
+
 
 ![annotator screen cast](./assets/annotator.gif)
 ## Set the environment
