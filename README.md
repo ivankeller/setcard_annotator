@@ -1,5 +1,10 @@
 # setcard_annotator
+A simple tool for annotating Set cards images from a Jupyter notebook.
 
+(inspired by https://github.com/agermanidis/pigeon and cleanly refactored ;)
+
+
+![annotator screen cast](./assets/annotator.gif)
 ## Set the environment
 From the root directory of this project do:
 ```bash
@@ -17,6 +22,15 @@ python -m unittest discover -v
 jupyter notebook
 ```
 
-In Jupyter notebook navigate to `setcard_annotator/notebooks` and start `notebook_annotator` notebook:
-<img width="399" alt="Screenshot 2020-11-19 at 00 03 06" src="https://user-images.githubusercontent.com/8144090/99599190-1fae9f80-29fb-11eb-96bf-e86cac8ac8ae.png">
+1. In Jupyter notebook navigate to `setcard_annotator/notebooks` and start the `notebook_annotator` notebook:  
+<img alt="jupyter" width="400" src="./assets/jupyter.png">
+
+2. On the top **configuration** cell provide:
+    - the path to the input directory containing PNG or JPG images to annotate, or a list of image paths
+    - (optional) the path for saving the annotations
+
+3. Run the cells and annotate using the buttons.   
+Annotations are saved one by one as individual JSON files in the `labels` sub-directory.
+Thus the process can be stopped at anytime to be resumed later: the annotation tool shows only the images that have not been previously annotated (based on the filename).
+
 
