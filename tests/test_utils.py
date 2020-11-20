@@ -24,6 +24,11 @@ class TestUtils(TestBaseClass):
         expected = [f'{directory}/{file}' for file in ['image1.jpg', 'image2.PNG', 'image3.PNG']]
         self.assertListEqual(result, expected)
 
+    def test_get_basename(self):
+        self.assertEqual(utils.get_basename('path/to/filename.txt'), 'filename')
+        self.assertEqual(utils.get_basename('filename.txt'), 'filename')
+        self.assertEqual(utils.get_basename('path/to/filename'), 'filename')
+
 
 if __name__ == '__main__':
     unittest.main()
