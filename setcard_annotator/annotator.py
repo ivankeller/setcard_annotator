@@ -83,8 +83,8 @@ class Annotator:
 
         """
         all_examples = list_images_in_directory(self.input_directory)
-        already_annotated_image_names = Annotator.get_basenames_in_directory()
-        return [example for example in all_examples if get_basename(example) in already_annotated_image_names]
+        already_annotated_image_names = Annotator.get_basenames_in_directory(directory=self.output_dir)
+        return [example for example in all_examples if get_basename(example) not in already_annotated_image_names]
 
     @staticmethod
     def get_basenames_in_directory(directory: str):
