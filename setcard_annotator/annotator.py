@@ -6,7 +6,7 @@ from IPython.display import display, Image
 from ipywidgets import Button, ToggleButtons, HTML, Output
 from typing import List, Dict, Union
 from setcard_annotator.label import Attribute, Color, Number, Shape, Shading
-from setcard_annotator.utils import list_images_in_directory
+from setcard_annotator.utils import list_images_in_directory, get_basename
 
 
 class ButtonName(Enum):
@@ -27,17 +27,17 @@ class Annotator:
 
     Attributes
     ----------
-    examples : List[str] or str
-        if list of strings: list of paths to image to annotate
-        if str: path to a directory containing images to annotate (jpg or png)
-    output_dir : str
-        directory to save annotations, if None (default) save to default sub-directory
+    directory : str
+        path to a directory containing images to annotate (jpg or png)
+    output_directory : str
+        directory to save annotations, if None (default) save to subdirectory DEFAULT_OUTPUT_SUBDIR
 
     """
 
-    def __init__(self, examples, output_dir=None):
-        self.examples = Annotator.list_examples_to_annotate(examples)
-        self.output_dir = self.set_output_dir(output_dir)
+    def __init__(self, directory, output_directory=None):
+        self.input_directory = directory
+        self.output_dir = self.set_output_dir(output_directory)
+        self.examples = self.list_examples_to_annotate()
         self.cursor = 0
         self.annotations = []
         self.progress_message = HTML()
@@ -64,37 +64,37 @@ class Annotator:
     def set_output_dir(self, output_dir: str) -> str:
         """Set output directory. If None set to default sub-directory."""
         if output_dir is None:
-            parent_dir = os.path.dirname(self.examples[0])
-            output_dir = os.path.join(parent_dir, DEFAULT_OUTPUT_SUBDIR)
+            output_dir = os.path.join(self.input_directory, DEFAULT_OUTPUT_SUBDIR)
         output_dir = os.path.abspath(output_dir)
-        os.makedirs(output_dir, exist_ok=True)
-        logger.info(f'created output directory: {output_dir}')
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+            logger.info(f'created output directory: {output_dir}')
         return output_dir
 
-    @staticmethod
-    def list_examples_to_annotate(examples: Union[List[str], str]) -> List[str]:
+    def list_examples_to_annotate(self) -> List[str]:
         """
         Return list of paths to images to annotate.
 
-        Parameters
-        ----------
-        examples : List[str] or str
-            if list of strings: list of paths to image to annotate
-            if str: path to a directory containing images to annotate (with extension: jpg or png)
+        Exclude already examples already annotated based on files in output_directory
 
         Returns
         -------
         List[str] of path to images to annotate
 
         """
-        # expected directory
-        if isinstance(examples, str):
-            return list_images_in_directory(examples)
-        # expected list of paths
-        elif isinstance(examples, List):
-            return examples
-        else:
-            raise TypeError("Wrong argument type.")
+        all_examples = list_images_in_directory(self.input_directory)
+        already_annotated_image_names = Annotator.get_basenames_in_directory(directory=self.output_dir)
+        return [example for example in all_examples if get_basename(example) not in already_annotated_image_names]
+
+    @staticmethod
+    def get_basenames_in_directory(directory: str):
+        """Return the list of the base names (filename without extension) of the files in given directory."""
+        basenames = []
+        for path in os.listdir(directory):
+            basename = get_basename(path)
+            basenames.append(basename)
+        return basenames
+
 
     @staticmethod
     def make_all_buttons() -> (Dict[str, ToggleButtons], Button):
