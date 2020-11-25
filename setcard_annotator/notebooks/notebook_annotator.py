@@ -20,10 +20,9 @@
 
 # +
 # examples to annotate: path to directory with card images
-examples = ''
-# examples ='../../../data_for_tests/examples_for_annotator/'
+examples ='../../assets/examples_for_annotator'
 
-# output directory for annotation saved as json files
+# output directory to save annotations as json files
 # If None annotations are saved by default in `labels` sub-directory of the examples directory
 output_dir = None
 # -
@@ -37,7 +36,5 @@ from setcard_annotator.annotator import Annotator
 
 # ## run the annotator
 
-annotator = Annotator(examples)
+annotator = Annotator(directory=examples, output_directory=output_dir)
 annotator.annotate()
-
-

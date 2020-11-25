@@ -37,6 +37,37 @@ class TestAnnotator(TestBaseClass):
             expected = [os.path.join(tmpdir, 'image3.png')]
             self.assertListEqual(result, expected)
 
+    def test_set_output_dir_None(self):
+        with TemporaryDirectory() as tmpdir:
+            # arrange and act
+            annot = Annotator(directory=tmpdir, output_directory=None)
+            result = annot.output_dir
+            # assert
+            expected = os.path.join(tmpdir, 'labels')
+            self.assertEqual(result, expected)
+
+    def test_set_output_dir_provided_exist(self):
+        with TemporaryDirectory() as tmpdir:
+            # arrange and act
+            annot = Annotator(directory=tmpdir, output_directory=tmpdir)
+            result = annot.output_dir
+            # assert
+            expected = os.path.join(tmpdir)
+            self.assertEqual(result, expected)
+
+    def test_set_output_dir_provided_does_not_exist(self):
+        with TemporaryDirectory() as tmpdir:
+            # arrange and act
+            label_dir = os.path.join(tmpdir, 'a/unknown/directory')
+            annot = Annotator(directory=tmpdir, output_directory=label_dir)
+            result = annot.output_dir
+            # assert
+            expected = label_dir
+            self.assertEqual(result, expected)
+
+
+
+
 
 if __name__ == '__main__':
     unittest.main()
