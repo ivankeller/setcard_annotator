@@ -6,7 +6,6 @@ A simple tool for annotating Set cards images from a Jupyter notebook.
 
 ![annotator screen cast](./assets/annotator.gif)
 
-Here is a [example of the Setcard Annotator notebook.](assets/notebook_annotator_example.html)
 ## Set the environment
 From the root directory of this project do:
 ```bash
